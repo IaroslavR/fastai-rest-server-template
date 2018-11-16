@@ -1,0 +1,72 @@
+swagger: '2.0'
+info:
+  title: News classifier
+  version: "0.1"
+consumes:
+- application/json
+produces:
+- application/json
+
+paths:
+  /:
+    get:
+      operationId: api.heartbeat
+      tags:
+      - heartbeat
+      description: |
+        This endpoint returns basic "vital signs"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            title: "heartbeat"
+            properties:
+              version:
+                type: "string"
+                description: |
+                  API server version
+  /predictions:
+    post:
+      operationId: api.dog_cat.predict
+      summary: Cat or dog prediction
+      parameters:
+      - name: query
+        in: body
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/Query'
+      responses:
+        200:
+          description: Returns predicted categories
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Prediction'
+
+
+definitions:
+  Prediction:
+    type: object
+    required:
+    - category
+    - text
+    properties:
+      category:
+        type: string
+        description: Predicted value
+        example: "cat"
+        readOnly: true
+      url:
+        type: string
+        description: source image url
+        example: "https://www.publicdomainpictures.net/pictures/170000/velka/cat-on-the-white-14629665801Rd.jpg"
+        readOnly: true
+  Query:
+    type: object
+    required:
+    - url
+    properties:
+      text:
+        type: string
+        description: image url
