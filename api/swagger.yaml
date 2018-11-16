@@ -25,7 +25,7 @@ paths:
                 type: "string"
                 description: |
                   API server version
-  /predictions:
+  /dog_cat:
     post:
       operationId: api.dog_cat.predict
       summary: Cat or dog prediction
@@ -50,23 +50,28 @@ definitions:
     type: object
     required:
     - category
-    - text
+    - source
     properties:
       category:
         type: string
         description: Predicted value
-        example: "cat"
+        example: "cats"
         readOnly: true
-      url:
+      source:
         type: string
         description: source image url
         example: "https://www.publicdomainpictures.net/pictures/170000/velka/cat-on-the-white-14629665801Rd.jpg"
         readOnly: true
+      processong_time:
+        type: string
+        description: image processing time
+        example: "00:00:01"
+        readOnly: true
   Query:
     type: object
     required:
-    - url
+    - uri
     properties:
-      text:
+      uri:
         type: string
-        description: image url
+        description: image uri

@@ -6,7 +6,7 @@ freeze:
 new:
 	conda env create -f ${PROJ_ROOT}/environment.yml
 
-test:
-	@echo ${PROJ_ROOT}
+tests:
+	pytest
 
-.PONY: freeze env test
+.PONY: freeze new tests

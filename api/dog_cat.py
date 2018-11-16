@@ -1,69 +1,76 @@
-from pathlib import Path
+import io
+import json
+import time
+from pathlib import Path, PosixPath
+from urllib.parse import urlparse
 
 import attr
+import fastai
 import requests
+import torch
+from fastai.vision import open_image, ImageDataBunch, imagenet_stats, create_cnn
 
+from api import MODEL_PATH, DOWNLOAD_PATH
 
-from urllib.parse import urlparse
-from api import APP_PATH
+CLASES = ["cats", "dogs"]
+MODEL = fastai.vision.models.resnet34
 
-path_to_model = Path(APP_PATH).joinpath("models/lesson1-rxt50.h5")
-download_path = Path(APP_PATH).joinpath("downloads")
+fastai.defaults.device = torch.device("cpu")
 
 
 @attr.s
-class ModelLoader:
-    custom_model_path: str = attr.ib(default=path_to_model)
-    download_path: str = attr.ib(default=download_path)
-    model = attr.ib()
+class Predictor:
+    model = attr.ib(default=MODEL)
+    custom_model_path: str = attr.ib(default=MODEL_PATH)
+    classes: list = attr.ib(default=CLASES)
+    predictor = attr.ib()
+    download_path: str = attr.ib(default=DOWNLOAD_PATH)
     data = attr.ib(default=None)
-    data_file = attr.ib(default=None)
+    data_file: str = attr.ib(default=None)
 
-    @model.default
-    def init_model(self):
-        # model = resnet50()
-        # state = torch.load(self.custom_model_path)
-        # model.load_state_dict(state)
-        # model.eval()
-        # return model
-        pass
+    @predictor.default
+    def init_predictor(self):
+        data = ImageDataBunch.single_from_classes("", self.classes, size=224).normalize(
+            imagenet_stats
+        )
+        learn = create_cnn(data, self.model).load(self.custom_model_path)
+        return learn
 
     @staticmethod
     def get_by_url(url):
-        return requests.get(url).content
+        return open_image(io.BytesIO(requests.get(url).content))
 
-    def get_data(self, url: str, save=True) -> None:
-        self.data = self.get_by_url(url)
+    @staticmethod
+    def get_by_path(path: PosixPath):
+        return open_image(path)
+
+    def get_data(self, uri: str, save=True) -> None:
+        path = urlparse(uri)
+        if path.scheme == "file":
+            self.data = self.get_by_path(Path(path.path))
+        else:
+            self.data = self.get_by_url(uri)
         if save:
-            self.data_file = Path(self.download_path).joinpath(
-                Path(urlparse(url).path).name
-            )
-            with open(self.data_file, "wb") as f:
-                f.write(self.data)
+            self.data.save(Path(self.download_path).joinpath(Path(path.path).name))
 
-    def classify(self, url):
-        self.get_data(url)
+    def classify(self, uri: str) -> dict:
+        stime = time.time()
+        try:
+            self.get_data(uri)
+            result, _, _ = self.predictor.predict(self.data)
+        except Exception:
+            result = 'processing error'
+        return {
+            "result": result,
+            "source": uri,
+            "processing_time": time.time() - stime}
 
 
-model = ModelLoader()
+predictor = Predictor()
 
 
-def predict(*args, **kwargs):
-    #
-    # normalize = torchvision.transforms.Normalize(
-    #     mean=[0.485, 0.456, 0.406],
-    #     std=[0.229, 0.224, 0.225]
-    # )
-    # preprocess = torchvision.transforms.Compose([
-    #     torchvision.transforms.Scale(256),
-    #     torchvision.transforms.CenterCrop(224),
-    #     torchvision.transforms.ToTensor(),
-    #     normalize
-    # ])
-    #
-    # img_tensor = preprocess(img).unsqueeze_(0)
-    # img_variable = Variable(img_tensor.cuda())
-    #
-    # log_probs = torch_model(img_variable)
-    # preds = np.argmax(log_probs.cpu().data.numpy(), axis=1)
-    pass
+def predict(**kwargs):
+    response = []
+    for item in kwargs["query"]:
+        response.append(predictor.classify(item["uri"]))
+    return json.dumps(response)

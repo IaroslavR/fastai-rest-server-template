@@ -7,6 +7,11 @@ import connexion
 from api.config import config
 
 APP_PATH = Path(os.path.realpath(__file__)).parent.parent
+MODEL_PATH = os.environ.get(
+    "MODEL_PATH", Path(APP_PATH).joinpath("model/lession1-resnet34-2")
+)
+DOWNLOAD_PATH = os.environ.get("DOWNLOAD_PATH", Path(APP_PATH).joinpath("downloads"))
+
 __version__ = "0.1"
 
 

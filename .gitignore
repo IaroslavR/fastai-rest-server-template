@@ -1,5 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
 __pycache__
-downloads/
-model/
+downloads/*
+model/*
+.pytest_cache/
+!/model/.gitkeep
+!/downloads/.gitkeep
