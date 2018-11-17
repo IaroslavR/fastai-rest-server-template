@@ -63,12 +63,12 @@ ln -s /data data && cd $_
 * from remote to local
 ```bash
 scp -P <port> -i <path to key> root@52.204.230.7:/remote/folder/file  file
+# for example
+# scp -P 25484 -i ~/.ssh/vastai_rsa root@52.204.230.7:/data/dogscats/models/lession1-resnet34-2.pth lession1-resnet34-2.pth
 ```
 * from local to remote
 ```bash
 scp -P <port> -i <path to key>
-# for example
-# scp -P 25484 -i ~/.ssh/vastai_rsa model/lesson1-rxt50.h5 root@52.204.230.7:/root/demo/model/lesson1-rxt50.h5
 ```
 
 #### make commands

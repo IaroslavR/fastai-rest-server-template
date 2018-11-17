@@ -9,6 +9,8 @@ Based on [Five Minutes from Machine Learning to RESTful API](https://jobs.zaland
 
 ### How to use
 - see [INSTALL](INSTALL.md) for conda kernel installation details
+- [train](notebooks/binary-classification-resnet34.ipynb) model
+- [download](INSTALL.md#copy-models-fromto-local-machine) it locally
 - install venv and run server
 ```bash
 git clone https://github.com/IaroslavR/fastai-rest-server-template.git
@@ -16,9 +18,8 @@ cd fastai-rest-server-template
 make new
 source activate flask-ai
 python app.py
-
 ```
-- open `http://127.0.0.1:5000/ui/` in browser
+- open `http://127.0.0.1:5000/ui/` in browser and use your API
 
 ### Additional reading
 - [SSH tunnelling how-to](https://www.everythingcli.org/ssh-tunnelling-for-fun-and-profit-local-vs-remote/)
