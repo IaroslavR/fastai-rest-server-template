@@ -78,7 +78,7 @@ scp -P <port> -i <path to key>
 
 
 #### create conda kernel manually
-list existed kernels: `jupyter kernelspec list`
+list existed kernels: `jupyter kernelspec list`  
 **note** not working as expected(always active current shell environment) for me. Workaround: `jupyter notebook` mustbe started in **activated** `flask-ai` environment
 
 From root conda environment
