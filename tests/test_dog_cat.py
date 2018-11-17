@@ -27,13 +27,13 @@ def mock_get_by_url(monkeypatch):
 def test_dog_cat(mock_get_by_url, client):
     payload = json.dumps(
         [
-            {
-                "uri": "https://www.publicdomainpictures.net/pictures/170000/velka/cat-on-the-white-14629665801Rd.jpg"
-            },
+            {"uri": "https://www.publicdomainpictures.net/pictures/170000/velka/cat-on-the-white-14629665801Rd.jpg"},
+            {"uri": f"file://{samples_path}/cat-on-the-white-14629665801Rd.jpg"},
             {"uri": "https://no.image"},
         ]
     )
     res = client.post("/dog_cat", data=payload, content_type="application/json")
     assert res.status_code == 200
     assert "cats" == json.loads(res.json)[0]["result"]
-    assert "processing error" == json.loads(res.json)[1]["result"]
+    assert "cats" == json.loads(res.json)[1]["result"]
+    assert "processing error" == json.loads(res.json)[2]["result"]
