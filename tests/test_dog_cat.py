@@ -30,9 +30,7 @@ def test_dog_cat(mock_get_by_url, client):
             {
                 "uri": "https://www.publicdomainpictures.net/pictures/170000/velka/cat-on-the-white-14629665801Rd.jpg"
             },
-            {
-                "uri": "https://no.image"
-            },
+            {"uri": "https://no.image"},
         ]
     )
     res = client.post("/dog_cat", data=payload, content_type="application/json")

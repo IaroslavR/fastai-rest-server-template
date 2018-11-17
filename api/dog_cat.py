@@ -59,11 +59,8 @@ class Predictor:
             self.get_data(uri)
             result, _, _ = self.predictor.predict(self.data)
         except Exception:
-            result = 'processing error'
-        return {
-            "result": result,
-            "source": uri,
-            "processing_time": time.time() - stime}
+            result = "processing error"
+        return {"result": result, "source": uri, "processing_time": time.time() - stime}
 
 
 predictor = Predictor()
