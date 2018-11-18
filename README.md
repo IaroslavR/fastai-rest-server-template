@@ -5,8 +5,7 @@
 
 ### REST server template for fast.ai
 
-Based on [Five Minutes from Machine Learning to RESTful API](https://jobs.zalando.com/tech/blog/connexion-zalando-open-source/?gh_src=4n3gxh1), answers from [forums.fast.ai](https://forums.fast.ai) and [cource v3 preview](https://github.com/fastai/course-v3/blob/master/nbs/dl1/lesson1-pets.ipynb)
-
+Based on [Five Minutes from Machine Learning to RESTful API](https://jobs.zalando.com/tech/blog/connexion-zalando-open-source/?gh_src=4n3gxh1) and answers from [forums.fast.ai](https://forums.fast.ai)
 ### How to use
 - see [INSTALL](INSTALL.md) for conda kernel installation details
 - [train](notebooks/binary-classification-resnet34.ipynb) model
@@ -15,7 +14,7 @@ Based on [Five Minutes from Machine Learning to RESTful API](https://jobs.zaland
 ```bash
 git clone https://github.com/IaroslavR/fastai-rest-server-template.git
 cd fastai-rest-server-template
-make new
+make environment
 source activate flask-ai
 python app.py
 ```

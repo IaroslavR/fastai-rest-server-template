@@ -7,7 +7,7 @@ all paths valid for `vast.ai` `paperspace` docker image. If you use something el
 apt install software-properties-common
 add-apt-repository ppa:ultradvorka/ppa
 apt get update
-apt install htop hstr
+apt install htop hstr direnv
 hstr --show-configuration >> ~/.bashrc
 pip install gpustat
 ```
@@ -72,7 +72,7 @@ scp -P <port> -i <path to key>
 ```
 
 #### make commands
-* `make new` create new conda env from `environment.yml`
+* `make environment` create new conda env from `environment.yml`
 * `make tests` run tests (env must be activated)
 * `make freeze` save list of installed in conda env (env must be activated) packages
 
