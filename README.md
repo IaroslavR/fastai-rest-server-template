@@ -20,6 +20,8 @@ python app.py
 ```
 - open `http://127.0.0.1:5000/ui/` in browser and use your API
 
+![ui](images/ui.png)
+
 ### Additional reading
 - [SSH tunnelling how-to](https://www.everythingcli.org/ssh-tunnelling-for-fun-and-profit-local-vs-remote/)
 - [tmux how-to](https://github.com/reshamas/fastai_deeplearn_part1/blob/master/tools/tmux.md#section-c)

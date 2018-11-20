@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  title: News classifier
+  title: Dog cat classifier
   version: "0.1"
 consumes:
 - application/json
@@ -28,6 +28,8 @@ paths:
   /dog_cat:
     post:
       operationId: api.dog_cat.predict
+      tags:
+      - fastai
       summary: Cat or dog prediction
       parameters:
       - name: query
