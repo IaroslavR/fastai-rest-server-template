@@ -6,6 +6,10 @@
 ### REST server template for fast.ai
 
 Based on [Five Minutes from Machine Learning to RESTful API](https://jobs.zalando.com/tech/blog/connexion-zalando-open-source/?gh_src=4n3gxh1) and answers from [forums.fast.ai](https://forums.fast.ai)
+- [flask](http://flask.pocoo.org/) as simple python server
+- [connection](https://github.com/zalando/connexion) as framework for build API server from [Swagger](https://swagger.io/) specification: no flask endpoints boilerplate, auto-generated API docs and automatic endpoint validation. All at once
+- [attrs](https://www.attrs.org/en/stable/why.html) Python classes without boilerplate
+- [fastai](https://github.com/fastai) 1.0.24
 ### How to use
 - see [INSTALL](INSTALL.md) for conda kernel installation details
 - [train](notebooks/binary-classification-resnet34.ipynb) model
